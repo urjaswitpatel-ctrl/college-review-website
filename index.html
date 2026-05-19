@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CampusVoice - College Reviews</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      background:#f4f7fb;
+      color:#222;
+    }
+
+    header{
+      background:#1e3a8a;
+      color:white;
+      padding:20px;
+      text-align:center;
+    }
+
+    header h1{
+      font-size:2.2rem;
+    }
+
+    .container{
+      width:90%;
+      max-width:1100px;
+      margin:30px auto;
+    }
+
+    .review-form{
+      background:white;
+      padding:25px;
+      border-radius:12px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.08);
+      margin-bottom:30px;
+    }
+
+    .review-form h2{
+      margin-bottom:20px;
+      color:#1e3a8a;
+    }
+
+    input, textarea, select{
+      width:100%;
+      padding:12px;
+      margin:10px 0;
+      border:1px solid #ccc;
+      border-radius:8px;
+      font-size:1rem;
+    }
+
+    textarea{
+      resize:vertical;
+      min-height:120px;
+    }
+
+    button{
+      background:#2563eb;
+      color:white;
+      border:none;
+      padding:12px 20px;
+      border-radius:8px;
+      cursor:pointer;
+      font-size:1rem;
+      transition:0.3s;
+    }
+
+    button:hover{
+      background:#1d4ed8;
+    }
+
+    .reviews-section h2{
+      margin-bottom:20px;
+      color:#1e3a8a;
+    }
+
+    .review-card{
+      background:white;
+      padding:20px;
+      border-radius:12px;
+      margin-bottom:20px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    .review-card h3{
+      color:#2563eb;
+      margin-bottom:8px;
+    }
+
+    .rating{
+      color:#f59e0b;
+      font-weight:bold;
+      margin-bottom:10px;
+    }
+
+    footer{
+      text-align:center;
+      padding:20px;
+      background:#1e3a8a;
+      color:white;
+      margin-top:40px;
+    }
+
+    .empty{
+      text-align:center;
+      color:#666;
+      margin-top:20px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>CampusVoice</h1>
+    <p>Post honest reviews about colleges</p>
+  </header>
+
+  <div class="container">
+
+    <div class="review-form">
+      <h2>Add College Review</h2>
+
+      <input type="text" id="collegeName" placeholder="College Name" />
+
+      <input type="text" id="reviewerName" placeholder="Your Name" />
+
+      <select id="rating">
+        <option value="">Select Rating</option>
+        <option value="5">5 ⭐ Excellent</option>
+        <option value="4">4 ⭐ Good</option>
+        <option value="3">3 ⭐ Average</option>
+        <option value="2">2 ⭐ Poor</option>
+        <option value="1">1 ⭐ Bad</option>
+      </select>
+
+      <textarea id="reviewText" placeholder="Write your review..."></textarea>
+
+      <button onclick="addReview()">Post Review</button>
+    </div>
+
+    <div class="reviews-section">
+      <h2>Student Reviews</h2>
+
+      <div id="reviewsContainer">
+        <p class="empty">No reviews yet.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>© 2026 CampusVoice | Built for GitHub Hosting</p>
+  </footer>
+
+  <script>
+    let reviews = JSON.parse(localStorage.getItem("collegeReviews")) || [];
+
+    function displayReviews() {
+      const container = document.getElementById("reviewsContainer");
+
+      if (reviews.length === 0) {
+        container.innerHTML = '<p class="empty">No reviews yet.</p>';
+        return;
+      }
+
+      container.innerHTML = "";
+
+      reviews.reverse().forEach(review => {
+        const card = document.createElement("div");
+        card.className = "review-card";
+
+        card.innerHTML = `
+          <h3>${review.college}</h3>
+          <p><strong>By:</strong> ${review.name}</p>
+          <p class="rating">${"⭐".repeat(review.rating)}</p>
+          <p>${review.text}</p>
+        `;
+
+        container.appendChild(card);
+      });
+
+      reviews.reverse();
+    }
+
+    function addReview() {
+
+      const college = document.getElementById("collegeName").value.trim();
+      const name = document.getElementById("reviewerName").value.trim();
+      const rating = document.getElementById("rating").value;
+      const text = document.getElementById("reviewText").value.trim();
+
+      if (!college || !name || !rating || !text) {
+        alert("Please fill all fields.");
+        return;
+      }
+
+      const review = {
+        college,
+        name,
+        rating,
+        text
+      };
+
+      reviews.push(review);
+
+      localStorage.setItem("collegeReviews", JSON.stringify(reviews));
+
+      document.getElementById("collegeName").value = "";
+      document.getElementById("reviewerName").value = "";
+      document.getElementById("rating").value = "";
+      document.getElementById("reviewText").value = "";
+
+      displayReviews();
+    }
+
+    displayReviews();
+  </script>
+
+</body>
+</html>
