@@ -5,48 +5,69 @@
 
   <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>CampusVoice</title>
 
   <style>
 
-    body{
-      font-family: Arial;
-      background:#f2f5ff;
+    *{
       margin:0;
       padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      font-family:Arial, sans-serif;
+      background:#eefbf1;
+      color:#1f2937;
     }
 
     header{
-      background:#1e40af;
+      background:linear-gradient(90deg,#15803d,#22c55e);
       color:white;
+      padding:30px;
       text-align:center;
-      padding:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    header h1{
+      font-size:40px;
+      margin-bottom:10px;
+    }
+
+    header p{
+      font-size:18px;
     }
 
     .container{
-      width:90%;
-      max-width:900px;
+      width:95%;
+      max-width:1100px;
       margin:auto;
-      margin-top:30px;
+      padding:25px;
+    }
+
+    .main-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:25px;
     }
 
     .form-box,
-    .review-card{
+    .review-section{
 
       background:white;
 
-      padding:20px;
+      padding:25px;
 
-      border-radius:10px;
+      border-radius:15px;
 
+      box-shadow:0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h2{
       margin-bottom:20px;
-
-      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+      color:#166534;
     }
 
     input,
@@ -55,26 +76,25 @@
 
       width:100%;
 
-      padding:10px;
-
-      margin-top:10px;
+      padding:12px;
 
       margin-bottom:15px;
 
-      border:1px solid #ccc;
+      border:1px solid #cbd5e1;
 
-      border-radius:6px;
+      border-radius:8px;
 
-      box-sizing:border-box;
+      font-size:15px;
     }
 
     textarea{
       min-height:120px;
+      resize:vertical;
     }
 
     button{
 
-      background:#2563eb;
+      background:#16a34a;
 
       color:white;
 
@@ -82,18 +102,74 @@
 
       padding:12px 20px;
 
-      border-radius:6px;
+      border-radius:8px;
 
       cursor:pointer;
+
+      font-size:16px;
+
+      width:100%;
     }
 
     button:hover{
-      background:#1d4ed8;
+      background:#15803d;
+    }
+
+    .search-box{
+      margin-bottom:20px;
+    }
+
+    .review-card{
+
+      background:#f8fff9;
+
+      border-left:6px solid #22c55e;
+
+      padding:18px;
+
+      border-radius:12px;
+
+      margin-bottom:20px;
+
+      box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .review-card img{
+
+      width:100%;
+
+      max-height:220px;
+
+      object-fit:cover;
+
+      border-radius:10px;
+
+      margin-bottom:12px;
     }
 
     .stars{
       color:orange;
-      font-size:18px;
+      font-size:20px;
+      margin:8px 0;
+    }
+
+    .college-name{
+      color:#166534;
+      font-size:24px;
+      margin-bottom:8px;
+    }
+
+    .reviewer{
+      font-weight:bold;
+      margin-bottom:10px;
+    }
+
+    @media(max-width:850px){
+
+      .main-grid{
+        grid-template-columns:1fr;
+      }
+
     }
 
   </style>
@@ -106,63 +182,94 @@
 
   <h1>CampusVoice</h1>
 
-  <p>Student College Reviews</p>
+  <p>Search & Share Student College Reviews</p>
 
 </header>
 
 <div class="container">
 
-  <div class="form-box">
+  <div class="main-grid">
 
-    <h2>Post Review</h2>
+    <!-- LEFT SIDE -->
 
-    <input
-      type="text"
-      id="collegeName"
-      placeholder="College Name"
-    >
+    <div class="form-box">
 
-    <input
-      type="text"
-      id="reviewerName"
-      placeholder="Your Name"
-    >
+      <h2>Post Review</h2>
 
-    <select id="rating">
+      <input
+        type="text"
+        id="collegeName"
+        placeholder="College Name"
+      >
 
-      <option value="">Select Rating</option>
+      <input
+        type="text"
+        id="reviewerName"
+        placeholder="Your Name"
+      >
 
-      <option value="5">5 Stars</option>
+      <select id="rating">
 
-      <option value="4">4 Stars</option>
+        <option value="">Select Rating</option>
 
-      <option value="3">3 Stars</option>
+        <option value="5">5 Stars</option>
 
-      <option value="2">2 Stars</option>
+        <option value="4">4 Stars</option>
 
-      <option value="1">1 Star</option>
+        <option value="3">3 Stars</option>
 
-    </select>
+        <option value="2">2 Stars</option>
 
-    <textarea
-      id="reviewText"
-      placeholder="Write your review"
-    ></textarea>
+        <option value="1">1 Star</option>
 
-    <button onclick="addReview()">
-      Submit Review
-    </button>
+      </select>
+
+      <textarea
+        id="reviewText"
+        placeholder="Write your review"
+      ></textarea>
+
+      <!-- PHOTO UPLOAD -->
+
+      <input
+        type="file"
+        id="collegePhoto"
+        accept="image/*"
+      >
+
+      <button onclick="addReview()">
+        Submit Review
+      </button>
+
+    </div>
+
+
+    <!-- RIGHT SIDE -->
+
+    <div class="review-section">
+
+      <h2>All Reviews</h2>
+
+      <!-- SEARCH -->
+
+      <input
+        type="text"
+        id="searchInput"
+        class="search-box"
+        placeholder="Search by College Name..."
+        onkeyup="filterReviews()"
+      >
+
+      <div id="reviewsContainer"></div>
+
+    </div>
 
   </div>
-
-  <h2>All Reviews</h2>
-
-  <div id="reviewsContainer"></div>
 
 </div>
 
 
-<!-- FIREBASE SCRIPT -->
+<!-- FIREBASE -->
 
 <script type="module">
 
@@ -178,17 +285,26 @@
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
-  // PASTE YOUR FIREBASE CONFIG HERE
+  // YOUR FIREBASE CONFIG
 
- const firebaseConfig = {
-  apiKey: "AIzaSyAKqsWATk0mdpfoyc-7SOkLRMob4Zaj__U",
-  authDomain: "campusvoice-21170.firebaseapp.com",
-  databaseURL: "https://campusvoice-21170-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "campusvoice-21170",
-  storageBucket: "campusvoice-21170.firebasestorage.app",
-  messagingSenderId: "1009764911560",
-  appId: "1:1009764911560:web:9544145427c0e8ecf918fd"
-};
+  const firebaseConfig = {
+
+    apiKey: "AIzaSyAKqsWATk0mdpfoyc-7SOkLRMob4Zaj__U",
+
+    authDomain: "campusvoice-21170.firebaseapp.com",
+
+    databaseURL:
+    "https://campusvoice-21170-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+    projectId: "campusvoice-21170",
+
+    storageBucket: "campusvoice-21170.firebasestorage.app",
+
+    messagingSenderId: "1009764911560",
+
+    appId: "1:1009764911560:web:9544145427c0e8ecf918fd"
+
+  };
 
 
   // INITIALIZE FIREBASE
@@ -198,7 +314,7 @@
   const db = getDatabase(app);
 
 
-  // ADD REVIEW FUNCTION
+  // ADD REVIEW
 
   function addReview(){
 
@@ -214,6 +330,8 @@
     const text =
       document.getElementById("reviewText").value;
 
+    const photoInput =
+      document.getElementById("collegePhoto");
 
     if(!college || !name || !rating || !text){
 
@@ -223,67 +341,124 @@
     }
 
 
-    push(ref(db, "reviews"), {
+    // IMAGE TO BASE64
 
-      college: college,
+    const file = photoInput.files[0];
 
-      name: name,
+    if(file){
 
-      rating: rating,
+      const reader = new FileReader();
 
-      text: text
+      reader.onload = function(){
 
-    });
+        saveReview(reader.result);
+
+      };
+
+      reader.readAsDataURL(file);
+
+    }
+
+    else{
+
+      saveReview("");
+
+    }
 
 
-    alert("Review Added");
+    function saveReview(photoURL){
+
+      push(ref(db, "reviews"), {
+
+        college: college,
+
+        name: name,
+
+        rating: rating,
+
+        text: text,
+
+        photo: photoURL
+
+      });
 
 
-    // CLEAR INPUTS
+      alert("Review Added Successfully");
 
-    document.getElementById("collegeName").value = "";
 
-    document.getElementById("reviewerName").value = "";
+      // CLEAR
 
-    document.getElementById("rating").value = "";
+      document.getElementById("collegeName").value = "";
 
-    document.getElementById("reviewText").value = "";
+      document.getElementById("reviewerName").value = "";
+
+      document.getElementById("rating").value = "";
+
+      document.getElementById("reviewText").value = "";
+
+      document.getElementById("collegePhoto").value = "";
+
+    }
 
   }
-
-
-  // MAKE FUNCTION GLOBAL
 
   window.addReview = addReview;
 
 
-  // LOAD REVIEWS LIVE
+  // LOAD REVIEWS
 
   const reviewsContainer =
     document.getElementById("reviewsContainer");
 
+  let allReviews = [];
+
 
   onValue(ref(db, "reviews"), (snapshot)=>{
 
-    reviewsContainer.innerHTML = "";
-
+    allReviews = [];
 
     snapshot.forEach((childSnapshot)=>{
 
-      const review = childSnapshot.val();
+      allReviews.push(childSnapshot.val());
 
+    });
+
+    displayReviews(allReviews);
+
+  });
+
+
+  // DISPLAY REVIEWS
+
+  function displayReviews(reviews){
+
+    reviewsContainer.innerHTML = "";
+
+    reviews.reverse().forEach((review)=>{
 
       reviewsContainer.innerHTML += `
 
         <div class="review-card">
 
-          <h3>${review.college}</h3>
+          ${
+            review.photo
+            ?
+            `<img src="${review.photo}">`
+            :
+            ""
+          }
 
-          <p><b>${review.name}</b></p>
+          <div class="college-name">
+            ${review.college}
+          </div>
 
-          <p class="stars">
+          <div class="reviewer">
+            Reviewed by ${review.name}
+          </div>
+
+          <div class="stars">
             ${"⭐".repeat(review.rating)}
-          </p>
+          </div>
 
           <p>${review.text}</p>
 
@@ -293,7 +468,31 @@
 
     });
 
-  });
+  }
+
+
+  // SEARCH FUNCTION
+
+  function filterReviews(){
+
+    const searchText =
+      document.getElementById("searchInput")
+      .value
+      .toLowerCase();
+
+    const filteredReviews = allReviews.filter((review)=>{
+
+      return review.college
+      .toLowerCase()
+      .includes(searchText);
+
+    });
+
+    displayReviews(filteredReviews);
+
+  }
+
+  window.filterReviews = filterReviews;
 
 </script>
 
